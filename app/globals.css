@@ -13,33 +13,74 @@ body {
 
 @layer components {
   .section-pad {
-    @apply py-12 sm:py-16 lg:py-20;
+    @apply py-14 sm:py-20;
   }
 
   .section-pad-tight {
-    @apply py-8 sm:py-10 lg:py-12;
+    @apply py-10 sm:py-14;
   }
 
   .surface-card {
-    @apply rounded-2xl border border-slate-200 bg-white shadow-soft;
+    @apply rounded-lg border border-slate-300 bg-white shadow-soft;
+  }
+
+  .panel-dark {
+    @apply rounded-lg border border-slate-700 bg-brand-charcoal text-white shadow-soft;
+  }
+
+  .panel-grid {
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+    background-size: 22px 22px;
   }
 
   .btn-base {
-    @apply inline-flex items-center justify-center rounded-xl px-5 py-3 text-sm font-semibold transition-colors;
+    @apply inline-flex items-center justify-center gap-2 rounded-md px-5 py-3 text-sm font-semibold transition-all;
   }
 
   .btn-primary {
-    @apply bg-brand-blue text-white hover:bg-sky-700;
+    @apply bg-brand-blue text-white hover:bg-blue-700;
   }
 
   .btn-secondary {
-    @apply border border-slate-300 bg-white text-brand-navy hover:bg-slate-100;
+    @apply border border-slate-400 bg-white text-brand-navy hover:bg-slate-100;
+  }
+
+  .btn-accent {
+    @apply bg-brand-amber text-brand-navy hover:bg-amber-300;
+  }
+
+  .kpi-tile {
+    @apply rounded-md border border-slate-700 bg-slate-900/60 p-4;
+  }
+
+  .cut-corner {
+    clip-path: polygon(0 0, calc(100% - 18px) 0, 100% 18px, 100% 100%, 0 100%);
+  }
+
+  .check-list li {
+    @apply relative pl-7;
+  }
+
+  .check-list li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.45rem;
+    width: 0.6rem;
+    height: 0.6rem;
+    background: theme('colors.brand.amber');
+    border-radius: 2px;
   }
 }
 
 a:focus-visible,
 button:focus-visible,
 input:focus-visible,
-textarea:focus-visible {
+textarea:focus-visible,
+select:focus-visible,
+details:focus-visible,
+summary:focus-visible {
   @apply outline-none ring-2 ring-brand-blue ring-offset-2 ring-offset-white;
 }

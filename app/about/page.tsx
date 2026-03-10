@@ -4,95 +4,117 @@ import { Container } from '@/components/container';
 import { CTABand } from '@/components/cta-band';
 import { CTAButton } from '@/components/cta-button';
 import { SectionHeading } from '@/components/section-heading';
-import { serviceAreaCopy } from '@/data/site';
+import { siteConfig } from '@/data/site-config';
+
+const { businessProfile, pageContent } = siteConfig;
+const { about: aboutPageSeo } = businessProfile.seoMetadata.pages;
 
 export const metadata: Metadata = {
-  title: 'About Our Dublin Plumbing Team | BluePipe Plumbing',
-  description:
-    'Learn about BluePipe Plumbing, a demo Dublin plumbing company focused on responsive service, clear communication, and reliable residential and commercial plumbing outcomes.',
+  title: aboutPageSeo.title,
+  description: aboutPageSeo.description,
   alternates: {
-    canonical: '/about'
+    canonical: aboutPageSeo.canonical
   },
   openGraph: {
-    title: 'About BluePipe Plumbing Dublin',
-    description:
-      'Meet the values and local service approach behind this Dublin-focused plumbing demo website.'
+    title: aboutPageSeo.openGraphTitle,
+    description: aboutPageSeo.openGraphDescription
   }
 };
 
 export default function AboutPage() {
   return (
     <>
-      <section className="section-pad bg-white">
-        <Container>
+      <section className="section-pad bg-brand-charcoal text-white">
+        <Container className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr]">
           <SectionHeading
             as="h1"
-            eyebrow="About Us"
-            title="A local Dublin plumbing team focused on dependable outcomes"
-            description="BluePipe Plumbing supports homeowners, landlords, and businesses with practical plumbing solutions and responsive service."
+            eyebrow="About BrightSpark Electrical"
+            title={pageContent.about.pageTitle}
+            description={pageContent.about.pageDescription}
+            invert
           />
-          <p className="mt-5 text-sm text-brand-slate">
-            Looking for service details? Visit our <Link href="/services" className="font-semibold text-brand-blue hover:underline">services page</Link> or request help through <Link href="/contact" className="font-semibold text-brand-blue hover:underline">contact</Link>.
-          </p>
+
+          <aside className="panel-dark panel-grid p-6 sm:p-8">
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-brand-amber">Company Overview</p>
+            <p className="mt-3 text-slate-200">{businessProfile.aboutCopy.overview}</p>
+            <p className="mt-4 text-slate-200">{businessProfile.aboutCopy.experience}</p>
+          </aside>
         </Container>
       </section>
 
-      <section className="section-pad-tight">
-        <Container className="grid gap-6 md:grid-cols-2">
-          <article className="surface-card p-6 sm:p-8">
-            <h2 className="text-2xl font-bold text-brand-navy">Company overview</h2>
-            <p className="mt-3 text-brand-slate">
-              BluePipe Plumbing handles day-to-day repairs, planned installations, and emergency callouts across Dublin and surrounding areas. Our goal is simple: fix the issue properly and make the process easy for customers.
-            </p>
-          </article>
-
-          <article className="surface-card p-6 sm:p-8">
-            <h2 className="text-2xl font-bold text-brand-navy">Experience and trust</h2>
-            <p className="mt-3 text-brand-slate">
-              We work on both residential and commercial systems, adapting to older Dublin properties and newer builds alike. Customers choose us for clear communication, punctual visits, and consistent workmanship.
-            </p>
-          </article>
-        </Container>
-      </section>
-
-      <section className="section-pad bg-white">
+      <section className="section-pad-tight bg-white">
         <Container>
-          <SectionHeading eyebrow="Our Values" title="How we approach every plumbing job" />
-          <div className="mt-8 grid gap-5 md:grid-cols-3">
-            <article className="rounded-2xl border border-slate-200 bg-brand-cloud p-6">
-              <h3 className="text-lg font-semibold text-brand-navy">Reliability</h3>
-              <p className="mt-2 text-brand-slate">Show up on time, solve the problem thoroughly, and stand behind the work.</p>
-            </article>
-            <article className="rounded-2xl border border-slate-200 bg-brand-cloud p-6">
-              <h3 className="text-lg font-semibold text-brand-navy">Transparency</h3>
-              <p className="mt-2 text-brand-slate">Explain options clearly so customers can make informed decisions without pressure.</p>
-            </article>
-            <article className="rounded-2xl border border-slate-200 bg-brand-cloud p-6">
-              <h3 className="text-lg font-semibold text-brand-navy">Respect</h3>
-              <p className="mt-2 text-brand-slate">Keep work areas tidy and treat every property like our own.</p>
-            </article>
+          <SectionHeading eyebrow="Safety Approach" title={businessProfile.aboutCopy.localWhyTitle} />
+          <div className="mt-6 grid gap-4 md:grid-cols-3">
+            {businessProfile.aboutCopy.values.map((value) => (
+              <article key={value.title} className="surface-card p-6">
+                <h2 className="text-lg font-semibold text-brand-navy">{value.title}</h2>
+                <p className="mt-2 text-sm text-brand-slate">{value.text}</p>
+              </article>
+            ))}
           </div>
         </Container>
       </section>
 
-      <section className="section-pad">
-        <Container className="rounded-2xl bg-brand-navy p-8 text-white shadow-soft">
-          <h2 className="text-2xl font-bold">Why local matters in Dublin plumbing</h2>
-          <p className="mt-3 max-w-3xl text-slate-200">{serviceAreaCopy.summary}</p>
-          <p className="mt-3 max-w-3xl text-slate-200">{serviceAreaCopy.extended}</p>
-          <div className="mt-6 flex flex-wrap gap-3">
-            <CTAButton href="/contact">Request a Quote</CTAButton>
-            <CTAButton href="/testimonials" variant="secondary">
-              Read Testimonials
-            </CTAButton>
+      <section className="section-pad-tight bg-brand-cloud">
+        <Container className="grid gap-5 lg:grid-cols-2">
+          <article className="surface-card p-6 sm:p-7">
+            <h2 className="text-2xl font-bold text-brand-navy">{pageContent.about.standardsTitle}</h2>
+            <ul className="check-list mt-4 space-y-2 text-brand-slate">
+              {businessProfile.aboutCopy.standards.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ul>
+          </article>
+
+          <article className="surface-card p-6 sm:p-7">
+            <h2 className="text-2xl font-bold text-brand-navy">{pageContent.about.expectationsTitle}</h2>
+            <ul className="check-list mt-4 space-y-2 text-brand-slate">
+              {businessProfile.aboutCopy.expectations.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ul>
+          </article>
+        </Container>
+      </section>
+
+      <section className="section-pad-tight bg-white">
+        <Container className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
+          <div>
+            <SectionHeading eyebrow="Local Coverage" title={pageContent.about.coverageTitle} description={businessProfile.serviceArea.summary} />
+            <p className="mt-4 text-brand-slate">{businessProfile.serviceArea.extended}</p>
+            <div className="mt-6 flex flex-wrap gap-2">
+              {businessProfile.serviceArea.areas.map((area) => (
+                <span key={area} className="rounded-md border border-slate-300 bg-white px-3 py-1 text-sm text-brand-slate">
+                  {area}
+                </span>
+              ))}
+            </div>
+          </div>
+
+          <div className="surface-card p-6 sm:p-7">
+            <h2 className="text-xl font-bold text-brand-navy">Need service details before booking?</h2>
+            <p className="mt-3 text-brand-slate">
+              Review our core electrical service categories, then request a quote with your issue and location details.
+            </p>
+            <div className="mt-5 flex flex-wrap gap-2">
+              <CTAButton href="/services">{businessProfile.ctaLabels.viewAllServices}</CTAButton>
+              <CTAButton href="/contact" variant="secondary">
+                {businessProfile.ctaLabels.requestQuote}
+              </CTAButton>
+            </div>
+            <p className="mt-4 text-sm text-brand-slate">
+              Looking for customer examples? Visit{' '}
+              <Link href="/testimonials" className="font-semibold text-brand-blue hover:underline">
+                case results
+              </Link>
+              .
+            </p>
           </div>
         </Container>
       </section>
 
-      <CTABand
-        title="Want local plumbing support you can rely on?"
-        text="Book a quote for planned work or call now for urgent plumbing issues in Dublin."
-      />
+      <CTABand title={pageContent.about.ctaBandTitle} text={pageContent.about.ctaBandText} />
     </>
   );
 }

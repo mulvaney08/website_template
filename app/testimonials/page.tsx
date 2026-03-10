@@ -4,77 +4,105 @@ import { Container } from '@/components/container';
 import { CTABand } from '@/components/cta-band';
 import { CTAButton } from '@/components/cta-button';
 import { SectionHeading } from '@/components/section-heading';
-import { TestimonialCard } from '@/components/testimonial-card';
-import { testimonialOutcomes, testimonials } from '@/data/site';
+import { siteConfig } from '@/data/site-config';
+
+const { businessProfile, pageContent, testimonialOutcomes } = siteConfig;
+const { testimonials: testimonialsPageSeo } = businessProfile.seoMetadata.pages;
 
 export const metadata: Metadata = {
-  title: 'Plumber Reviews Dublin (Sample Testimonials) | BluePipe Plumbing',
-  description:
-    'Browse sample testimonials for this Dublin plumbing demo site and see common customer outcomes like faster response and clear communication.',
+  title: testimonialsPageSeo.title,
+  description: testimonialsPageSeo.description,
   alternates: {
-    canonical: '/testimonials'
+    canonical: testimonialsPageSeo.canonical
   },
   openGraph: {
-    title: 'BluePipe Plumbing Testimonials (Demo)',
-    description:
-      'Sample testimonial content showing the type of customer outcomes expected from a Dublin plumbing service.'
+    title: testimonialsPageSeo.openGraphTitle,
+    description: testimonialsPageSeo.openGraphDescription
   }
 };
 
 export default function TestimonialsPage() {
   return (
     <>
-      <section className="section-pad bg-white">
+      <section className="section-pad bg-brand-charcoal text-white">
         <Container>
           <SectionHeading
             as="h1"
-            eyebrow="Testimonials"
-            title="What customers value most from a Dublin plumber"
-            description="The testimonials below are clearly marked sample/demo content for this website build."
+            eyebrow="Sample / Demo Case Results"
+            title={pageContent.testimonials.pageTitle}
+            description={pageContent.testimonials.pageDescription}
+            invert
           />
-          <p className="mt-4 rounded-xl bg-brand-light p-4 text-sm text-brand-navy">
-            Demo note: all testimonials on this page are sample content and not real customer submissions.
-          </p>
-          <p className="mt-4 text-sm text-brand-slate">
-            Need service details first? See our <Link href="/services" className="font-semibold text-brand-blue hover:underline">plumbing services</Link> or go straight to <Link href="/contact" className="font-semibold text-brand-blue hover:underline">contact</Link>.
+          <p className="mt-5 rounded-md border border-slate-700 bg-slate-900/60 p-4 text-sm text-slate-200">
+            {pageContent.testimonials.demoBanner}
           </p>
         </Container>
       </section>
 
-      <section className="section-pad-tight">
-        <Container className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-          {testimonials.map((item) => (
-            <TestimonialCard key={item.name} quote={item.text} name={item.name} area={item.area} />
+      <section className="section-pad-tight bg-white">
+        <Container className="grid gap-4 lg:grid-cols-2">
+          {businessProfile.testimonials.map((item) => (
+            <article key={`${item.name}-${item.tag}`} className="surface-card p-6">
+              <div className="flex items-center justify-between gap-4">
+                <p className="rounded-md bg-brand-light px-3 py-1 text-xs font-semibold uppercase tracking-[0.15em] text-brand-blue">{item.tag}</p>
+                <p className="text-xs text-brand-slate">
+                  {item.name} · {item.area}
+                </p>
+              </div>
+
+              <div className="mt-4 grid gap-3 sm:grid-cols-3">
+                <div>
+                  <p className="text-xs font-semibold uppercase tracking-[0.15em] text-slate-500">Problem</p>
+                  <p className="mt-1 text-sm text-brand-slate">{item.problem}</p>
+                </div>
+                <div>
+                  <p className="text-xs font-semibold uppercase tracking-[0.15em] text-slate-500">Solution</p>
+                  <p className="mt-1 text-sm text-brand-slate">{item.solution}</p>
+                </div>
+                <div>
+                  <p className="text-xs font-semibold uppercase tracking-[0.15em] text-slate-500">Outcome</p>
+                  <p className="mt-1 text-sm font-semibold text-brand-navy">{item.outcome}</p>
+                </div>
+              </div>
+
+              <blockquote className="mt-4 border-l-4 border-brand-amber pl-4 text-brand-slate">“{item.quote}”</blockquote>
+            </article>
           ))}
         </Container>
       </section>
 
-      <section className="section-pad bg-white">
-        <Container className="grid gap-6 md:grid-cols-2">
-          <article className="surface-card p-6">
-            <h2 className="text-xl font-bold text-brand-navy">Common outcomes mentioned</h2>
-            <ul className="mt-3 space-y-2 text-brand-slate">
+      <section className="section-pad-tight bg-brand-cloud">
+        <Container className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
+          <article className="surface-card p-6 sm:p-7">
+            <h2 className="text-xl font-bold text-brand-navy">{pageContent.testimonials.outcomesTitle}</h2>
+            <ul className="check-list mt-4 space-y-2 text-brand-slate">
               {testimonialOutcomes.map((outcome) => (
                 <li key={outcome}>{outcome}</li>
               ))}
             </ul>
           </article>
-          <article className="surface-card p-6">
-            <h2 className="text-xl font-bold text-brand-navy">Need help now?</h2>
-            <p className="mt-3 text-brand-slate">
-              If you need a dependable plumber in Dublin, contact BluePipe Plumbing for emergency response or quote requests.
-            </p>
-            <div className="mt-5">
-              <CTAButton href="/contact">Get in Touch</CTAButton>
+
+          <article className="surface-card p-6 sm:p-7">
+            <h2 className="text-xl font-bold text-brand-navy">{pageContent.testimonials.urgentHelpTitle}</h2>
+            <p className="mt-3 text-brand-slate">{pageContent.testimonials.urgentHelpDescription}</p>
+            <div className="mt-5 flex flex-wrap gap-2">
+              <CTAButton href="/contact">{businessProfile.ctaLabels.getInTouch}</CTAButton>
+              <CTAButton href={businessProfile.phoneHref} variant="secondary">
+                {businessProfile.ctaLabels.callNow}
+              </CTAButton>
             </div>
+            <p className="mt-4 text-sm text-brand-slate">
+              Need service details first? Visit{' '}
+              <Link href="/services" className="font-semibold text-brand-blue hover:underline">
+                services
+              </Link>
+              .
+            </p>
           </article>
         </Container>
       </section>
 
-      <CTABand
-        title="Need the same dependable result for your property?"
-        text="Send your plumbing request now and our team will follow up with practical next steps."
-      />
+      <CTABand title={pageContent.testimonials.ctaBandTitle} text={pageContent.testimonials.ctaBandText} />
     </>
   );
 }

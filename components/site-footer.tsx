@@ -1,34 +1,30 @@
 import Link from 'next/link';
-import { company } from '@/data/site';
+import { siteConfig } from '@/data/site-config';
 import { Container } from './container';
 
-const links = [
-  { href: '/', label: 'Home' },
-  { href: '/services', label: 'Services' },
-  { href: '/about', label: 'About' },
-  { href: '/testimonials', label: 'Testimonials' },
-  { href: '/contact', label: 'Contact' }
-];
-
 export function SiteFooter() {
+  const { businessProfile, navigationLinks, pageContent } = siteConfig;
+
   return (
-    <footer className="border-t border-slate-200 bg-white py-10">
-      <Container className="grid gap-8 md:grid-cols-3">
+    <footer className="border-t border-slate-800 bg-brand-charcoal py-12 text-slate-200">
+      <Container className="grid gap-8 md:grid-cols-[1.2fr_1fr_1fr]">
         <div>
-          <p className="text-xl font-bold text-brand-navy">{company.name}</p>
-          <p className="mt-2 text-sm text-brand-slate">Residential and commercial plumbing in Dublin and surrounding areas.</p>
+          <p className="text-2xl font-bold text-white">{businessProfile.name}</p>
+          <p className="mt-3 max-w-sm text-sm text-slate-300">{pageContent.footerBlurb}</p>
         </div>
-        <nav aria-label="Footer" className="flex flex-wrap gap-4 text-sm text-brand-slate">
-          {links.map((item) => (
-            <Link key={item.href} href={item.href} className="hover:text-brand-blue">
+
+        <nav aria-label="Footer" className="grid gap-2 text-sm">
+          {navigationLinks.map((item) => (
+            <Link key={item.href} href={item.href} className="hover:text-brand-amber">
               {item.label}
             </Link>
           ))}
         </nav>
-        <div className="text-sm text-brand-slate md:text-right">
-          <p>{company.phoneDisplay}</p>
-          <p>{company.email}</p>
-          <p className="mt-3 text-xs text-slate-500">Demo website for portfolio and development purposes.</p>
+
+        <div className="text-sm md:text-right">
+          <p className="font-semibold text-white">{businessProfile.phoneDisplay}</p>
+          <p>{businessProfile.email}</p>
+          <p className="mt-4 text-xs text-slate-400">{pageContent.demoNote}</p>
         </div>
       </Container>
     </footer>

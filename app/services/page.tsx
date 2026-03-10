@@ -5,107 +5,143 @@ import { CTABand } from '@/components/cta-band';
 import { CTAButton } from '@/components/cta-button';
 import { FAQSection } from '@/components/faq-section';
 import { SectionHeading } from '@/components/section-heading';
-import { company, serviceAreaCopy, services, servicesFaqs } from '@/data/site';
+import { siteConfig } from '@/data/site-config';
+
+const { businessProfile, faqs, pageContent } = siteConfig;
+const { services: servicesPageSeo } = businessProfile.seoMetadata.pages;
 
 export const metadata: Metadata = {
-  title: 'Plumbing Services Dublin | Emergency, Leak Repair, Drains, Boilers',
-  description:
-    'Explore BluePipe Plumbing services in Dublin: emergency plumbing, leak detection, drain unblocking, boiler support, kitchen and bathroom plumbing, and routine maintenance.',
+  title: servicesPageSeo.title,
+  description: servicesPageSeo.description,
   alternates: {
-    canonical: '/services'
+    canonical: servicesPageSeo.canonical
   },
   openGraph: {
-    title: 'Plumbing Services in Dublin | BluePipe Plumbing',
-    description:
-      'Detailed plumbing services for Dublin homes and businesses, with clear next steps for emergency and planned work.'
+    title: servicesPageSeo.openGraphTitle,
+    description: servicesPageSeo.openGraphDescription
   }
 };
+
+const serviceBySlug = new Map(businessProfile.services.map((service) => [service.slug, service]));
 
 export default function ServicesPage() {
   return (
     <>
-      <section className="section-pad bg-white">
-        <Container>
+      <section className="section-pad bg-brand-charcoal text-white">
+        <Container className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr] lg:items-end">
           <SectionHeading
             as="h1"
-            eyebrow="Services"
-            title="Complete plumbing support for homes and businesses in Dublin"
-            description="Compare our core plumbing services and request the right support for urgent issues or planned work."
+            eyebrow="Electrical Services Dublin"
+            title={pageContent.services.pageTitle}
+            description={pageContent.services.pageDescription}
+            invert
           />
-          <p className="mt-5 text-sm text-brand-slate">
-            Not sure what you need? Visit our <Link href="/contact" className="font-semibold text-brand-blue hover:underline">contact page</Link> and describe the issue. We will recommend the best service.
-          </p>
+
+          <aside className="panel-dark panel-grid p-6">
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-brand-amber">Emergency Route</p>
+            <h2 className="mt-2 text-2xl font-bold">{pageContent.services.emergencyTitle}</h2>
+            <p className="mt-3 text-slate-200">{pageContent.services.emergencyDescription}</p>
+            <a href={businessProfile.phoneHref} className="btn-base btn-accent mt-5 w-full">
+              {businessProfile.ctaLabels.emergencyCallNow}
+            </a>
+          </aside>
         </Container>
       </section>
 
-      <section className="section-pad-tight">
+      <section className="section-pad-tight bg-white">
         <Container>
-          <div className="surface-card bg-brand-navy p-6 text-white sm:p-8">
-            <p className="text-sm font-semibold uppercase tracking-wide text-sky-300">Emergency plumbing</p>
-            <h2 className="mt-2 text-2xl font-bold">Urgent issue? Call our team 24/7.</h2>
-            <p className="mt-2 max-w-2xl text-slate-100">
-              For burst pipes, major leaks, or blocked drains causing overflow, contact us immediately for priority response in Dublin.
-            </p>
-            <a href={company.phoneHref} className="mt-5 inline-flex rounded-xl bg-white px-5 py-3 text-sm font-semibold text-brand-navy">
-              Call {company.phoneDisplay}
-            </a>
+          <SectionHeading eyebrow="Category Index" title={pageContent.services.categoriesTitle} description={pageContent.services.categoriesDescription} />
+          <div className="mt-6 flex flex-wrap gap-2">
+            {businessProfile.serviceCategories.map((category) => (
+              <a key={category.id} href={`#${category.id}`} className="rounded-md border border-slate-300 px-4 py-2 text-sm font-semibold text-brand-navy hover:bg-brand-light">
+                {category.title}
+              </a>
+            ))}
           </div>
         </Container>
       </section>
 
-      <section className="section-pad-tight">
-        <Container className="space-y-6">
-          {services.map((service, index) => (
-            <div key={service.title}>
-              <article className="surface-card p-6 sm:p-8">
-                <h2 className="text-2xl font-bold text-brand-navy">{service.title}</h2>
-                <p className="mt-3 text-lg text-brand-slate">{service.summary}</p>
-                <p className="mt-3 text-brand-slate">{service.detail}</p>
-                <div className="mt-5 flex flex-wrap gap-3">
-                  <CTAButton href="/contact">Request a Quote</CTAButton>
-                  <CTAButton href={company.phoneHref} variant="secondary">
-                    Call for Advice
-                  </CTAButton>
+      <section className="section-pad-tight bg-brand-cloud">
+        <Container className="space-y-8">
+          {businessProfile.serviceCategories.map((category) => (
+            <section id={category.id} key={category.id} className="surface-card p-6 sm:p-8">
+              <div className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
+                <div>
+                  <p className="text-xs font-semibold uppercase tracking-[0.2em] text-brand-blue">Category</p>
+                  <h2 className="mt-2 text-2xl font-bold text-brand-navy">{category.title}</h2>
+                  <p className="mt-3 text-brand-slate">{category.intro}</p>
                 </div>
-              </article>
-
-              {(index === 1 || index === 3) && (
-                <aside className="mt-6 rounded-2xl bg-brand-light p-6 sm:flex sm:items-center sm:justify-between">
-                  <div>
-                    <h3 className="text-xl font-bold text-brand-navy">Plan your next plumbing job with confidence</h3>
-                    <p className="mt-2 max-w-2xl text-brand-slate">
-                      Tell us what you need and we will provide a practical recommendation and quote for your Dublin property.
-                    </p>
+                <div className="rounded-md border border-slate-200 bg-white p-4">
+                  <p className="text-sm font-semibold text-brand-navy">Category FAQs</p>
+                  <div className="mt-3 space-y-2">
+                    {category.faqs.map((item) => (
+                      <details key={item.question} className="rounded-md border border-slate-200 px-3 py-2">
+                        <summary className="cursor-pointer text-sm font-semibold text-brand-navy">{item.question}</summary>
+                        <p className="mt-2 text-sm text-brand-slate">{item.answer}</p>
+                      </details>
+                    ))}
                   </div>
-                  <CTAButton href="/contact">Get a Quote</CTAButton>
-                </aside>
-              )}
-            </div>
+                </div>
+              </div>
+
+              <div className="mt-6 grid gap-4 md:grid-cols-2">
+                {category.serviceSlugs.map((slug) => {
+                  const service = serviceBySlug.get(slug);
+                  if (!service) return null;
+
+                  return (
+                    <article id={service.slug} key={service.slug} className="rounded-md border border-slate-300 bg-white p-5">
+                      <h3 className="text-xl font-semibold text-brand-navy">{service.title}</h3>
+                      <p className="mt-2 text-sm text-brand-slate">{service.summary}</p>
+
+                      <div className="mt-4 rounded-md bg-brand-light p-4">
+                        <p className="text-xs font-semibold uppercase tracking-[0.15em] text-brand-blue">Problem / Solution</p>
+                        <p className="mt-2 text-sm text-brand-slate">{service.detail}</p>
+                      </div>
+
+                      <div className="mt-4">
+                        <p className="text-sm font-semibold text-brand-navy">Typical problems solved</p>
+                        <ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-brand-slate">
+                          {service.typicalProblems.map((problem) => (
+                            <li key={problem}>{problem}</li>
+                          ))}
+                        </ul>
+                      </div>
+
+                      <div className="mt-5 flex flex-wrap gap-2">
+                        <CTAButton href="/contact">{service.quoteCtaLabel}</CTAButton>
+                        <CTAButton href={businessProfile.phoneHref} variant="secondary">
+                          {businessProfile.ctaLabels.callForAdvice}
+                        </CTAButton>
+                      </div>
+                    </article>
+                  );
+                })}
+              </div>
+            </section>
           ))}
         </Container>
       </section>
 
-      <section className="section-pad bg-white">
+      <section className="section-pad-tight bg-white">
         <Container>
-          <SectionHeading
-            eyebrow="Dublin Coverage"
-            title="Service area for plumbing work in and around Dublin"
-            description={serviceAreaCopy.summary}
-          />
-          <p className="mt-5 text-brand-slate">{serviceAreaCopy.extended}</p>
+          <p className="text-sm text-brand-slate">
+            Need quick guidance before choosing? Use our{' '}
+            <Link href="/contact" className="font-semibold text-brand-blue hover:underline">
+              contact page
+            </Link>{' '}
+            and we will match your issue to the correct service.
+          </p>
         </Container>
       </section>
 
       <FAQSection
-        title="Dublin Plumbing Services FAQ"
-        description="Answers to common service questions before requesting a plumbing quote."
-        items={servicesFaqs}
+        title={pageContent.services.faqTitle}
+        description={pageContent.services.faqDescription}
+        items={faqs.services}
       />
 
-      <CTABand
-        title="Need a quote for plumbing work in Dublin?"
-        text="Share your issue and area, and we will help you choose the right service and next available slot."
-      />
+      <CTABand title={pageContent.services.ctaBandTitle} text={pageContent.services.ctaBandText} />
     </>
   );
 }

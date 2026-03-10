@@ -1,14 +1,18 @@
+import { siteConfig } from '@/data/site-config';
+
 export function MapPlaceholder() {
+  const { businessProfile } = siteConfig;
+
   return (
     <div
-      className="surface-card flex min-h-72 items-center justify-center border-dashed border-slate-300 p-6 text-center"
+      className="surface-card panel-grid min-h-72 border-dashed border-slate-500/40 bg-brand-charcoal p-6 text-center text-white"
       role="img"
-      aria-label="Map placeholder for Dublin service area"
+      aria-label={`Map placeholder for ${businessProfile.serviceArea.label}`}
     >
-      <div>
-        <p className="text-lg font-semibold text-brand-navy">Map Placeholder</p>
-        <p className="mt-2 text-sm text-brand-slate">
-          Embed your preferred map provider here to show BluePipe Plumbing service coverage across Dublin.
+      <div className="mx-auto flex h-full max-w-xl flex-col items-center justify-center">
+        <p className="text-lg font-semibold">Coverage Map Placeholder</p>
+        <p className="mt-2 text-sm text-slate-200">
+          Embed your preferred map provider here to show {businessProfile.name} coverage across {businessProfile.serviceArea.label}.
         </p>
       </div>
     </div>

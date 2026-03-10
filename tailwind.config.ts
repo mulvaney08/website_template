@@ -10,15 +10,17 @@ const config: Config = {
     extend: {
       colors: {
         brand: {
-          navy: '#0F2747',
-          slate: '#334155',
-          blue: '#1D7ACB',
-          light: '#EAF4FF',
-          cloud: '#F5F8FC'
+          navy: '#101A2B',
+          slate: '#3B475A',
+          blue: '#0A7CFF',
+          amber: '#F2B705',
+          charcoal: '#0D1117',
+          light: '#EEF5FF',
+          cloud: '#F3F6FB'
         }
       },
       boxShadow: {
-        soft: '0 10px 30px rgba(15, 39, 71, 0.08)'
+        soft: '0 16px 40px rgba(16, 26, 43, 0.12)'
       },
       borderRadius: {
         xl: '1rem'

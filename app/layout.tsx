@@ -4,35 +4,33 @@ import './globals.css';
 import { SiteHeader } from '@/components/site-header';
 import { SiteFooter } from '@/components/site-footer';
 import { MobileStickyCall } from '@/components/mobile-sticky-call';
-import { company, serviceAreas, services } from '@/data/site';
+import { siteConfig } from '@/data/site-config';
 
-const siteUrl = 'https://bluepipe-demo.example';
+const { businessProfile } = siteConfig;
+const { seoMetadata } = businessProfile;
 
 export const metadata: Metadata = {
-  metadataBase: new URL(siteUrl),
+  metadataBase: new URL(seoMetadata.siteUrl),
   title: {
-    default: 'BluePipe Plumbing Dublin | Emergency & Local Plumbing Services',
-    template: '%s | BluePipe Plumbing Dublin'
+    default: seoMetadata.defaultTitle,
+    template: seoMetadata.titleTemplate
   },
-  description:
-    'BluePipe Plumbing is a demo plumbing website for Dublin, covering emergency plumbing, leak repair, drain unblocking, and residential and commercial plumbing support.',
+  description: seoMetadata.defaultDescription,
   alternates: {
     canonical: '/'
   },
   openGraph: {
     type: 'website',
-    url: siteUrl,
-    siteName: 'BluePipe Plumbing',
-    title: 'BluePipe Plumbing Dublin | Emergency & Local Plumbing Services',
-    description:
-      'Plumbing support for Dublin homes and businesses. Emergency callouts, planned repairs, maintenance, and installation services.',
-    locale: 'en_IE'
+    url: seoMetadata.siteUrl,
+    siteName: businessProfile.name,
+    title: seoMetadata.defaultTitle,
+    description: seoMetadata.openGraphDescription,
+    locale: seoMetadata.locale
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'BluePipe Plumbing Dublin | Emergency & Local Plumbing Services',
-    description:
-      'Demo plumbing website targeting Dublin search intent with emergency and planned plumbing services.'
+    title: seoMetadata.defaultTitle,
+    description: seoMetadata.twitterDescription
   },
   icons: {
     icon: '/favicon.svg'
@@ -42,35 +40,34 @@ export const metadata: Metadata = {
 const organizationSchema = {
   '@context': 'https://schema.org',
   '@type': 'Organization',
-  name: company.name,
-  url: siteUrl,
-  email: company.email,
-  telephone: company.phoneDisplay,
-  areaServed: 'Dublin and surrounding areas',
-  description: 'Demo organization profile for a Dublin-focused plumbing website.'
+  name: businessProfile.name,
+  url: seoMetadata.siteUrl,
+  email: businessProfile.email,
+  telephone: businessProfile.phoneDisplay,
+  areaServed: businessProfile.serviceArea.label,
+  description: `${businessProfile.name} serves ${businessProfile.serviceArea.label}.`
 };
 
 const localBusinessSchema = {
   '@context': 'https://schema.org',
-  '@type': 'PlumbingBusiness',
-  name: company.name,
-  url: siteUrl,
-  email: company.email,
-  telephone: company.phoneDisplay,
-  areaServed: serviceAreas,
-  openingHours: ['Mo-Fr 07:00-19:00', 'Sa 08:00-17:00'],
-  serviceType: services.map((service) => service.title),
+  '@type': seoMetadata.schemaBusinessType,
+  name: businessProfile.name,
+  url: seoMetadata.siteUrl,
+  email: businessProfile.email,
+  telephone: businessProfile.phoneDisplay,
+  areaServed: businessProfile.serviceArea.areas,
+  openingHours: businessProfile.openingHours,
+  serviceType: businessProfile.services.map((service) => service.title),
   contactPoint: [
     {
       '@type': 'ContactPoint',
       contactType: 'customer service',
-      telephone: company.phoneDisplay,
-      email: company.email,
-      areaServed: 'Dublin'
+      telephone: businessProfile.phoneDisplay,
+      email: businessProfile.email,
+      areaServed: businessProfile.serviceArea.label
     }
   ],
-  description:
-    'Demo local business schema for a plumbing company serving Dublin and nearby areas. Contact details are placeholders.'
+  description: `${businessProfile.name} provides local services in ${businessProfile.serviceArea.label}.`
 };
 
 export default function RootLayout({
@@ -84,7 +81,7 @@ export default function RootLayout({
         <Script id="organization-schema" type="application/ld+json" strategy="beforeInteractive">
           {JSON.stringify(organizationSchema)}
         </Script>
-        <Script id="plumbingbusiness-schema" type="application/ld+json" strategy="beforeInteractive">
+        <Script id="local-business-schema" type="application/ld+json" strategy="beforeInteractive">
           {JSON.stringify(localBusinessSchema)}
         </Script>
         <a href="#content" className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:bg-white focus:px-3 focus:py-2">
