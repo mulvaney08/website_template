@@ -35,7 +35,7 @@ const serviceIconPath: Record<string, string> = {
 export default function Home() {
   return (
     <>
-      <section className="section-pad bg-brand-charcoal text-white">
+      <section className="tech-section section-pad bg-brand-charcoal text-white">
         <Container className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr]">
           <div>
             <p className="inline-flex border-l-4 border-brand-amber pl-3 text-sm font-semibold uppercase tracking-[0.2em] text-brand-amber">
@@ -58,7 +58,7 @@ export default function Home() {
             </div>
           </div>
 
-          <aside className="panel-dark panel-grid cut-corner p-6 sm:p-8">
+          <aside className="panel-dark panel-grid cut-corner edge-card p-6 sm:p-8">
             <p className="text-xs font-semibold uppercase tracking-[0.2em] text-brand-amber">Live Priority Lane</p>
             <h2 className="mt-3 text-2xl font-bold">Emergency Electrical Repairs</h2>
             <p className="mt-3 text-slate-200">
@@ -71,7 +71,7 @@ export default function Home() {
 
             <div className="mt-6 grid gap-3 sm:grid-cols-2">
               {businessProfile.trustMetrics.slice(0, 2).map((metric) => (
-                <article key={metric.label} className="kpi-tile">
+                <article key={metric.label} className="stat-block">
                   <p className="text-xs uppercase tracking-wide text-slate-300">{metric.label}</p>
                   <p className="mt-1 text-lg font-semibold text-white">{metric.value}</p>
                 </article>
@@ -90,7 +90,7 @@ export default function Home() {
       <section className="bg-slate-950 py-6 text-white">
         <Container className="grid gap-4 md:grid-cols-4">
           {businessProfile.trustMetrics.map((metric) => (
-            <article key={metric.label} className="rounded-md border border-slate-700 bg-slate-900/70 p-4">
+            <article key={metric.label} className="stat-block">
               <p className="text-xs uppercase tracking-wider text-brand-amber">{metric.label}</p>
               <p className="mt-2 text-xl font-bold">{metric.value}</p>
               <p className="mt-2 text-sm text-slate-300">{metric.note}</p>
@@ -110,8 +110,8 @@ export default function Home() {
 
           <div className="mt-10 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
             {businessProfile.services.map((service) => (
-              <article key={service.slug} className="surface-card cut-corner p-6">
-                <div className="inline-flex rounded-md bg-brand-light p-2">
+              <article key={service.slug} className="surface-card cut-corner edge-card p-6">
+                <div className="inline-flex rounded-sm bg-brand-light p-2">
                   <svg viewBox="0 0 24 24" className="h-6 w-6 fill-brand-blue" aria-hidden="true">
                     <path d={serviceIconPath[service.slug]} />
                   </svg>
@@ -130,7 +130,7 @@ export default function Home() {
         </Container>
       </section>
 
-      <section className="section-pad bg-brand-charcoal text-white">
+      <section className="tech-section section-pad bg-brand-charcoal text-white">
         <Container className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr]">
           <SectionHeading
             eyebrow="Safety and Compliance"
@@ -205,7 +205,7 @@ export default function Home() {
         </Container>
       </section>
 
-      <section className="section-pad-tight bg-brand-charcoal text-white">
+      <section className="tech-section section-pad-tight bg-brand-charcoal text-white">
         <Container>
           <SectionHeading
             eyebrow="Case Snapshots"
@@ -215,7 +215,7 @@ export default function Home() {
           />
           <div className="mt-8 grid gap-4 md:grid-cols-3">
             {businessProfile.testimonials.slice(0, 3).map((item) => (
-              <article key={item.name} className="rounded-lg border border-slate-700 bg-slate-900/60 p-5">
+              <article key={item.name} className="rounded-sm border border-slate-700 bg-slate-900/70 p-5">
                 <p className="text-xs font-semibold uppercase tracking-[0.2em] text-brand-amber">{item.tag}</p>
                 <p className="mt-3 text-sm text-slate-200">{item.problem}</p>
                 <p className="mt-2 text-sm font-semibold text-white">Outcome: {item.outcome}</p>
