@@ -1,0 +1,45 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+}
+
+body {
+  @apply bg-brand-cloud text-slate-900 antialiased;
+  font-family: "Avenir Next", "Nunito Sans", "Segoe UI", "Helvetica Neue", sans-serif;
+}
+
+@layer components {
+  .section-pad {
+    @apply py-12 sm:py-16 lg:py-20;
+  }
+
+  .section-pad-tight {
+    @apply py-8 sm:py-10 lg:py-12;
+  }
+
+  .surface-card {
+    @apply rounded-2xl border border-slate-200 bg-white shadow-soft;
+  }
+
+  .btn-base {
+    @apply inline-flex items-center justify-center rounded-xl px-5 py-3 text-sm font-semibold transition-colors;
+  }
+
+  .btn-primary {
+    @apply bg-brand-blue text-white hover:bg-sky-700;
+  }
+
+  .btn-secondary {
+    @apply border border-slate-300 bg-white text-brand-navy hover:bg-slate-100;
+  }
+}
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+  @apply outline-none ring-2 ring-brand-blue ring-offset-2 ring-offset-white;
+}
